@@ -17,7 +17,7 @@ Our algorithm will iterate over the bytes of the string and count the character 
 
 For our example, it will be {a:2,b:1}
 
-Knowing we only have 2 different characters, we can represent them in 2bits for example a -> `01` and b -> `10`
+Knowing we only have 2 different characters, we can represent them in 2bits for example a -> `01` and b -> `10`, if we had 27 different characters, we would use 5 bits since 2**5 = 32 possibilities > 27
 
 Now we have everything we need, knowing that the number of occurence is `0000 0010` in binary, 
 the encoded bytes will be :

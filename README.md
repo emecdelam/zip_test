@@ -14,15 +14,18 @@ Our algorithm will iterate over the bytes of the string and count the character 
 For our example, it will be {a:2,b:1}
 Knowing we only have 2 different characters, we can represent them in 2bits for example a -> 01 and b -> 10
 Now we have everything we need, knowing that the number of occurence is 0000 0010 in binary, 
-the encoded bytes will be : 00000010 01100001 00000001 01100010 00000010 00000000 011001
-                            ^        ^        ^        ^        ^        ^        ^
-                            the number of different characters
-                                     a in bits
-                                              the conversion : a -> 01
-                                                        b in bits 
-                                                                the conversion : b -> 10
-                                                                          the delimiter
-                                                                                  aba converted to 01 10 01
+the encoded bytes will be :
+```plaintext
+00000010 01100001 00000001 01100010 00000010 00000000 011001
+^        ^        ^        ^        ^        ^        ^
+the number of different characters
+        a in bits
+                  the conversion : a -> 01
+                           b in bits
+                                    the conversion : b -> 10
+                                              the delimiter
+                                                      aba converted to 01 10 01
+```
 
 ## Results 
 

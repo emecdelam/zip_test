@@ -7,13 +7,14 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         //========= DEBUG =========
-        //print_bytes("abc");
         //printer(get_bytes("aba"));
         //printer(invertMap(get_occurrence("aba"),2));
         //System.out.println(splitBitString(encoder("aba")));
         //System.out.println(decoder(encoder("aba")));
         //========= DEBUG =========
         compareBytesLength(
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." +
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." +
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." +
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." +
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." +
@@ -46,13 +47,12 @@ public class Main {
         return Arrays.toString(chunks.toArray(new String[0]));
     }
     public static void compareBytesLength(String input){
-        int compressedlength = encoder(input).length();
-        int normallength = get_bytes(input).length * 8;
-        System.out.println("Encoded : \n"+input);
-        System.out.println("Decoded : \n"+decoder(encoder(input)));
-        System.out.println("Compressed bytes : "+compressedlength);
-        System.out.println("Normal bytes : "+normallength);
-        System.out.println("Percentage lost : "+((1.0 -(double) compressedlength/normallength )*100) + "%");
+        String encoded = encoder(input);
+        String[] bytes = get_bytes(input);
+        System.out.println(("Encoded equals decoded: \n" + input.equals(decoder(encoded))));
+        System.out.println("Compressed bits : "+encoded.length());
+        System.out.println("Normal bits : "+bytes.length * 8);
+        System.out.println("Percentage lost : "+(double) Math.round(((1.0 -((double) (encoded.length())/(bytes.length * 8 )))*100) * 100) / 100 + "%");
     }
     public static String[] get_bytes(String input){
         byte[] res = input.getBytes();
@@ -105,7 +105,7 @@ public class Main {
     }
     public static String encoder(String input){
         HashMap<Character,Integer> dic = checker(get_occurrence(input));
-        int numBits = (int) Math.ceil(Math.log(dic.size()) / Math.log(2)) + 1;
+        int numBits = (int) Math.ceil(Math.log(dic.size()+1) / Math.log(2));
         if (numBits > 8){
             throw new RuntimeException("numbits > 8");
         }
